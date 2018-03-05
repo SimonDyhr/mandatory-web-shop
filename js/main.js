@@ -1,8 +1,6 @@
 
-
-
 /* Array of products */
-var products = [
+const products = [
     { id: 1,    productName: "ADIDAS ORIGINALS ULTRABOOST AT",    price: 240,     color: 'TRIPLE WHITE',      description: "Beskrivning1",    mainImage: "img/asd.jpg" },
     { id: 2,    productName: "ADIDAS ORIGINALS ULTRABOOST LTD",   price: 220,     color: 'BLACK / WHITE',     description: "Beskrivning2",    mainImage: "img/asd.jpg" },
     { id: 3,    productName: "CONVERSE ZIP 70`S LOW",             price: 123,     color: 'PURE PLATINUM',     description: "Beskrivning3",    mainImage: "img/asd.jpg" },
@@ -12,57 +10,43 @@ var products = [
 ];
 
 
-/*const prices = products.map(function (products) { return products.price; });
-console.log("Prices:", prices);*/
 
+// Loopen för produkter
+for (let i = 0; i < products.length; i++) {
 
+    const { id, productName, description, price, mainImage } = products[i]; //Fetch data to use in html beneath
 
-
-
-/*
-*
-* Loopen för produkter
-*
-*/
-var insideHTML = "";
-var i;
-for (i = 0; i < products.length; i++) {
-
-
-    var html = [
-        "<br /><div class='product row' id='product" + i +"'>",
-            "<div class='col-md-7'>",
-                "<div class='productName' id='productName" + i +"'><h4>" + products[i].productName + "</h4></div>",
-                "<div class='productPrice' id='productPrice" + i +"'><h6>" + products[i].price + "kr</h6></div>",
-                "<div class='productDescription' id='productDescription" + i +"'>" + products[i].description + "</div>",
-                "<button class='add-to-cart btn btn-primary' onclick='addToCart(this.id)' id='" + products[i].id + "'> Köp </button>",
-            "</div>",
-            "<div class='productImage col-md-5' id='productImage" + i +"'><img class='img-fluid rounded mb-3 mb-md-0' src='" + products[i].mainImage + "'></div>",
-            "",
-        "</div>"
-    ].join('');
-
-
-    insideHTML += html;
-
-    //var div = document.getElementById('products');
-    //div.innerHTML += "<div class='product' id='product" + i +"'><div class='productName' id='productName" + i +"'>" + products[i].productName + "</div><div class='productPrice' id='productPrice" + i +"'>" + products[i].price + "kr</div><div class='productDescription' id='productDescription" + i +"'>" + products[i].description + "</div><div class='productImage' id='productImage" + i +"'><img src='" + products[i].mainImage + "'></div><button class='add-to-cart' onclick='addToCart(this.id)' id='" + products[i].id + "'> Köp </button></div>";
+    $('#products').append(`
+    <br />
+    <div class='product row' id='product + i +'>
+        <div class='col-md-7'>
+            <div class='productName' id='productName + i +'><h4>${productName}</h4></div>
+            <div class='productPrice' id='productPrice + i +'><h6>${price}</h6></div>
+            <div class='productDescription' id='productDescription + i +'>${description}</div>
+            <button class='add-to-cart btn btn-primary' id='${id}'> Add to cart </button>
+            <button class='show-product btn btn-primary' id='${id}'> Show product </button>
+        </div>
+        <div class='productImage col-md-5' id='productImage + i +'><img class='img-fluid rounded mb-3 mb-md-0' src='${mainImage}'></div>
+    </div>
+    `);
 }
 
-//Draw the shoppingcart
-var productList = document.getElementById('products');
-productList.innerHTML = insideHTML;
 
-
-
-
-
-document.getElementById("menuProducts").addEventListener("click", function(){
-    document.getElementById("products").style.display = "block";
-    document.getElementById("checkout").style.display = "none";
+//Pressed menulink Products
+$('.menuProducts').on('click', function() {
+    $("#products").fadeIn();
+    $("#checkout").hide();
+    $(".productPage").hide();
 });
-
-document.getElementById("menuContact").addEventListener("click", function(){
-    document.getElementById("products").style.display = "none";
-    document.getElementById("checkout").style.display = "block";
+//Pressed menulink Checkout
+$('.menuCheckout').on('click', function() {
+    $("#checkout").fadeIn();
+    $("#products").hide();
+    $(".productPage").hide();
+});
+//Pressed more info on product
+$('.show-product').on('click', function() {
+    $(".productPage").fadeIn();
+    $("#checkout").hide();
+    $("#products").hide();
 });

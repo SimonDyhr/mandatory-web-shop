@@ -8,16 +8,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Place favicon.ico in the root directory -->
-
         <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
         <!-- Custom styles  -->
         <link rel="stylesheet" href="css/normalize.css">
         <link href="css/1-col-portfolio.css" rel="stylesheet">
         <link rel="stylesheet" href="css/checkout.css">
+        <link rel="stylesheet" href="css/productPage.css">
     </head>
     <body>
         <!--[if lte IE 9]>
@@ -38,17 +39,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item" id="menuProducts">
+                        <li class="nav-item menuProducts" id="menuProducts">
                             <a class="nav-link">Products</a>
                         </li>
-                        <li class="nav-item" id="menuContact">
+                        <li class="nav-item menuCheckout" id="menuContact">
                             <a class="nav-link">Checkout <span id="cartNumber" class="ion-ios-cart" aria-hidden="true"> 0</span></a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
 
 
 
@@ -141,20 +141,62 @@
         </div>
 
 
+
+
+
+        <div id="productPage" class="productPage" style="display: none;">
+            <button class='menuProducts'>x</button>
+            <div id="productPageDetails">
+            </div>
+            <div id="productPageReviews" class="container">
+                <div id="createNewReview" class="rating-widget">
+                    <br /> <br />
+                    <form id="review-form" action="index.html" method="post">
+                        <h4>Write your own review</h4>
+                        <div class="form-group">
+                            <label class="control-label" for="starRating">Your starrating:</label>
+                            <select name="starRating" id="starRating">
+                                <option value="1">1 Star</option>
+                                <option value="2">2 Star</option>
+                                <option value="3">3 Star</option>
+                                <option value="4">4 Star</option>
+                                <option value="5">5 Star</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="review">Your Review:</label>
+                            <textarea class="form-control" rows="5" placeholder="Your Reivew" name="review" id="review"></textarea>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input class="form-control" type="text" placeholder="Name" name="name" id="name" value="">
+                        </div>
+                        <a href="#" id="submitReview" class="btn btn-primary">Submit review</a>
+                        <input id="submitForm" type="submit" style="display:none;">
+                    </form>
+                    <br />
+                    <h4>Read what others have said about this product:</h4>
+                </div>
+                <div id="reviewsMade">
+                </div>
+            </div>
+        </div>
+
+
     </body>
 
 
+    <!-- BOOTSTRAP -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
     <!-- Custom JavaScript -->
     <script src="js/main.js"></script>
     <script src="js/checkout.js"></script>
     <script src="js/cart.js"></script>
-
-
-    <!-- BOOTSTRAP -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/productPage.js"></script>
 
 
 </html>
