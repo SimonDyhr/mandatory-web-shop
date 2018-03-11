@@ -1,31 +1,30 @@
-/* Array of products */
-const reviews = [
-    { productID: 1,    personName: "Robert Sjöblom",        reviewText: "Den duger 1",     starRating: 4},
-    { productID: 1,    personName: "Kristoffer Frejd",      reviewText: "Den duger 2",     starRating: 3},
-    { productID: 1,    personName: "Johan Månsson",         reviewText: "Den duger 3",     starRating: 2},
-    { productID: 2,    personName: "Robin Thörn",           reviewText: "Den duger 4",     starRating: 1},
-    { productID: 2,    personName: "Simon Dyhr",            reviewText: "Den duger 5",     starRating: 4},
-    { productID: 3,    personName: "Agneta Olsson",         reviewText: "Den duger 6",     starRating: 4},
-    { productID: 4,    personName: "Anders Andersson",      reviewText: "Den duger 7",     starRating: 5}
-];
+/* Array of reviews */
+let reviews =
+fetch('http://demo.edument.se/api/reviews')
+    .then(response => response.json())
+    .then(function (element) {
+        reviews = element;
+    })
+    .catch(err => console.log(err));
+
 
 //Show product
-$('.show-product').on('click', function() {
+$('#products').on('click','.product .show-product', function() {
     const productID = $(this).attr('id'); //Get ID from button
 
-    let productInfo = products.find(product => product.id === Number(productID)); //Find data from the retrieved ID
+    let productInfo = products.find(product => product.Id === Number(productID)); //Find data from the retrieved ID
 
     // Push out the data
     $('#productPageDetails').html(`
     <div class='productInDetail container'>
         <div class='productInDetailRow row'>
             <div class='productImageDetail col-md-5' id='productImage'>
-                <img class='img-fluid rounded mb-3 mb-md-0' src='${productInfo.mainImage}'>
+                <img class='img-fluid rounded mb-3 mb-md-0' src='${productInfo.Image}'>
             </div>
             <div class='productInformationDetail col-md-7'>
-                <div class='productNameDetail'><h4>${productInfo.productName}</h4></div>
-                <div class='productpriceDetail'><h6>${productInfo.price}</h6></div>
-                <div class='productdescriptDetail'>${productInfo.description}</div>
+                <div class='productNameDetail'><h4>${productInfo.Name}</h4></div>
+                <div class='productpriceDetail'><h6>${productInfo.Price} $</h6></div>
+                <div class='productdescriptDetail'>${productInfo.Description}</div>
             </div>
         </div>
     </div>`);
@@ -33,13 +32,13 @@ $('.show-product').on('click', function() {
 
 
 
-
+    $('.submitReview').attr('id', productID); //Set ID on reviewbutton
 
 
 
 
     //Reviews
-    let productInfoReviews = reviews.filter(product => product.productID === Number(productID)); //Find data from the retrieved ID
+    let productInfoReviews = reviews.filter(product => product.ProductID === Number(productID)); //Find data from the retrieved ID
     $('#reviewsMade').html(``);  //Clear before entering loop
 
     //loop out all reviews
@@ -48,9 +47,9 @@ $('.show-product').on('click', function() {
         <div class='productInDetail container'>
             <div class='productInDetailRow row'>
                 <div class='productInformationDetail col-md-12'>
-                    <div class='productNameDetail'><h4>${productInfoReviews[i].personName}</h4></div>
-                    <div class='productpriceDetail'><h6>${productInfoReviews[i].reviewText}</h6></div>
-                    <div class='productdescriptDetail'>${productInfoReviews[i].starRating} Stars</div><br />
+                    <div class='productNameDetail'><h4>${productInfoReviews[i].Name}</h4></div>
+                    <div class='productpriceDetail'><h6>${productInfoReviews[i].Comment}</h6></div>
+                    <div class='productdescriptDetail'>${productInfoReviews[i].Rating} Stars</div><br />
                 </div>
             </div>
         </div> <br />`);
@@ -66,22 +65,27 @@ $('.show-product').on('click', function() {
 * Will be fixed to be generic in next assignment!
 *
 * */
-$('#submitReview').on('click', function() {
-    let textInput = document.querySelector('#review');
-    let msgText = textInput.value;
+$('.submitReview').on('click', function(e) {
+    e.preventDefault();
 
-    let textInputName = document.querySelector('#name');
-    let inputName = textInputName.value;
+    const productID = $(this).attr('id'); //Get ID from button
+    let user = $("#reviewName").val();
+    let comment = $("#reviewComment").val();
+    let userRating = $("#starRating").val();
 
-    let textInputStars = document.querySelector('#starRating');
-    let inputStars = textInputStars.value;
+    console.log(user, comment, userRating, productID);
 
-    reviews.push({productID: 1,    personName: inputName,      reviewText: msgText,     starRating: inputStars});
-
-    const productID = '1'; //Get ID from button
+    //Post review
+    fetch("http://demo.edument.se/api/reviews", {
+        method: 'POST',
+        body: JSON.stringify({Id: 1, ProductID: productID, Name: user, Comment: comment, Rating: userRating}),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
 
     //Reviews
-    let productInfoReviews = reviews.filter(product => product.productID === Number(productID)); //Find data from the retrieved ID
+    let productInfoReviews = reviews.filter(product => product.ProductID === Number(productID)); //Find data from the retrieved ID
     $('#reviewsMade').html(``);  //Clear before entering loop
 
     //loop out all reviews
@@ -90,9 +94,9 @@ $('#submitReview').on('click', function() {
         <div class='productInDetail container'>
             <div class='productInDetailRow row'>
                 <div class='productInformationDetail col-md-12'>
-                    <div class='productNameDetail'><h4>${productInfoReviews[i].personName}</h4></div>
-                    <div class='productpriceDetail'><h6>${productInfoReviews[i].reviewText}</h6></div>
-                    <div class='productdescriptDetail'>${productInfoReviews[i].starRating} Stars</div><br />
+                    <div class='productNameDetail'><h4>${productInfoReviews[i].Name}</h4></div>
+                    <div class='productpriceDetail'><h6>${productInfoReviews[i].Comment}</h6></div>
+                    <div class='productdescriptDetail'>${productInfoReviews[i].Rating} Stars</div><br />
                 </div>
             </div>
         </div> <br />`);

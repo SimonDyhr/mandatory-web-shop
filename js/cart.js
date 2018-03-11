@@ -2,7 +2,7 @@
 //ITEMS array
 const items = [];
 
-$('.add-to-cart').on('click', function() {
+$('#products').on('click','.product .add-to-cart', function() {
     const productID = $(this).attr('id'); //Get ID from button
 
     //check if product already exists in the cart
@@ -10,7 +10,7 @@ $('.add-to-cart').on('click', function() {
         if (items[i].id === productID){
 
             //add another item to the amount if existing
-            var itemAmount = items[i].amount;
+            let itemAmount = items[i].amount;
             items[i].amount = itemAmount + 1;
 
             var productExists = 1; //Value exists. Therefore we do not need to create it again.
@@ -38,14 +38,14 @@ function drawCart(){
 
     for (let i = 0; i < items.length; i++) {
 
-        let productInfo = products.find(product => product.id === Number(items[i].id)); //Find data from the retrieved ID
+        let productInfo = products.find(product => product.Id === Number(items[i].id)); //Find data from the retrieved ID
 
         // Push out the data
         $('#cart-list').append(`
         <tr>
             <div class='productsInCart'>
                 <th scope='row'> ${i + 1}</th>
-                <td><div class='productName'>${productInfo.productName}</div></td>
+                <td><div class='productName'>${productInfo.Name}</div></td>
                 <td><div class='text-center'><button class='increaseAmount' id='${i}'>+</button></div></td>
                 <td><div class='productAmount text-center' id='increaseAmount${i}'>${items[i].amount}</div></td>
                 <td><div class='text-center'><button class='decreaseAmount' id='${i}'>-</button></div></td>
