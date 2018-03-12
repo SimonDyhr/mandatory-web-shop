@@ -59,12 +59,7 @@ $('#products').on('click','.product .show-product', function() {
 
 
 
-/*
-*
-* I know this is static, overestimated my time for this assignment. So I ran out of time.
-* Will be fixed to be generic in next assignment!
-*
-* */
+/* Submit review */
 $('.submitReview').on('click', function(e) {
     e.preventDefault();
 
