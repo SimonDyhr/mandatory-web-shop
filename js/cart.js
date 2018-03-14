@@ -41,9 +41,9 @@ function addToCart(value){
 //Update and draw shopping cart
 function drawCart(){
     var insideHTML = "";
-    var i;
     var y = 0;
-    for (i = 0; i < items.length; i++) {
+    var cartNumber = 0;
+    for (var i = 0; i < items.length; i++) {
         y++; //For table number
 
         //Find the Item in the Products() array
@@ -61,6 +61,7 @@ function drawCart(){
             "</tr>",
         ].join('');
 
+        cartNumber += items[i].amount;
         insideHTML += html;
     }
 
@@ -70,7 +71,7 @@ function drawCart(){
 
     //Draw the shoppingIcon Number
     var shoppingCartNumber = document.getElementById('cartNumber');
-    shoppingCartNumber.innerHTML = " " + items.length;
+    shoppingCartNumber.innerHTML = " " + cartNumber;
 }
 
 
@@ -94,6 +95,8 @@ function increaseAmount(value){
 
     var shoppingCartAmount = document.getElementById('increaseAmount' + x);
     shoppingCartAmount.innerHTML = items[x].amount;
+
+    drawCart();
 }
 
 
@@ -117,6 +120,8 @@ function decreaseAmount(value){
 
     var shoppingCartAmount = document.getElementById('increaseAmount' + x);
     shoppingCartAmount.innerHTML = items[x].amount;
+
+    drawCart();
 }
 
 
