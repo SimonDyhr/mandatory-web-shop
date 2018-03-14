@@ -35,6 +35,7 @@ $('#products').on('click','.product .add-to-cart', function() {
 //Update and draw shopping cart
 function drawCart(){
     $('#cart-list').html(``); //Töm cart-list innan vi ritar ut den igen
+    let cartNumber = 0;
 
     for (let i = 0; i < items.length; i++) {
 
@@ -52,9 +53,11 @@ function drawCart(){
             </div>
         </tr>
         `);
+
+        cartNumber += items[i].amount;
     }
 
-    $('#cartNumber').html(` ` + items.length); //Draw out amount of items in shopping cart
+    $('#cartNumber').html(` ` + cartNumber); //Draw out amount of items in shopping cart
 
 
 
@@ -68,6 +71,7 @@ function drawCart(){
         items[productID].amount = productAmount + 1;
 
         $('#increaseAmount' + productID).html(items[productID].amount);
+        drawCart();
     });
 
     //decrease amount
@@ -85,6 +89,7 @@ function drawCart(){
         }
 
         $('#increaseAmount' + productID).html(items[productID].amount);
+        drawCart();
     });
 }
 
